@@ -1,24 +1,31 @@
 file(GLOB_RECURSE HEADER_FILES
-    **/*[.h, .hpp]
+    ${CMAKE_SOURCE_DIR}/src/publisher/*.h
+    ${CMAKE_SOURCE_DIR}/src/subscriber/*.h
+    ${CMAKE_SOURCE_DIR}/src/common/*.h
 )
 
 file(GLOB_RECURSE SOURCE_FILES
-    *.cpp
+    ${CMAKE_SOURCE_DIR}/src/publisher/*.cpp
+    ${CMAKE_SOURCE_DIR}/src/subscriber/*.cpp
+    ${CMAKE_SOURCE_DIR}/src/common/*.cpp
 )
 
+message(STATUS ${HEADER_FILES})
+message(STATUS ${SOURCE_FILES})
+
 add_executable(
-    esen
+    messaging_library
     main.cpp
     ${HEADER_FILES}
     ${SOURCE_FILES}
 )
 
-target_include_directories(esen
+target_include_directories(messaging_library
     PRIVATE
     include
 )
 
-target_link_libraries(esen
+target_link_libraries(messaging_library
     PRIVATE
 )
 
