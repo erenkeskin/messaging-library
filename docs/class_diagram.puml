@@ -1,0 +1,35 @@
+@startuml
+
+class Publisher {
+	+Publisher(MessageQueue)
+	+publish(Message)
+	-messageQueue_ : MessageQueue
+}
+
+class Subscriber {
+	+Subscriber(MessageQueue)
+	+subscribe(string, function<void(Message)>)
+	+stop()
+	+run()
+	-running_ : bool
+	-messageQueue_ : MessageQueue
+	-callbacks_ : unordered_map<string, function<void(Message)>>
+}
+
+struct Message {
+	-topic : string
+	-timestamp : time_point
+	-payload : variant
+}
+
+class MessageQueue {
+	+enqueue(Message)
+	+dequeue() : Message
+	-messages_ : queue<Message>
+	-mutex_ : mutex
+	-condition_variable : condition_variable
+}
+
+Publisher --> MessageQueue : publish()
+Subscriber --> MessageQueue : enqueue()
+Subscriber --> MessageQueue : dequeue()
