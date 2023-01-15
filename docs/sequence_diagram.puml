@@ -1,0 +1,21 @@
+@startuml
+
+actor Client
+
+Client -> Publisher : new Publisher(queue)
+Client -> Publisher : publish(message)
+
+Publisher -> MessageQueue : enqueue(message)
+
+Client -> Subscriber : new Subscriber(queue)
+Client -> Subscriber : subscribe("topic", callback)
+Client -> Subscriber : run()
+
+activate Subscriber
+Subscriber -> MessageQueue : dequeue()
+deactivate Subscriber
+Subscriber -> callback : callback(message)
+
+Client -> Subscriber : stop()
+
+@enduml
