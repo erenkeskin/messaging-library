@@ -1,0 +1,18 @@
+@startuml
+
+start
+:create Publisher(queue);
+:create Subscriber(queue);
+:subscribe("topic", callback);
+:run;
+
+:publish(message);
+
+:enqueue(message);
+:dequeue();
+:callback(message);
+:stop;
+
+stop
+
+@enduml
