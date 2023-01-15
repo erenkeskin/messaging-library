@@ -1,0 +1,15 @@
+version: '3'
+services:
+    builder:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: /bin/bash -c "conan install .. --build=missing && cmake -DBUILD_TESTS=on .. && make"
+    tester:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: /bin/bash -c "ctest -V"
+        depends_on:
+            builder:
+                condition: service_completed_successfully
